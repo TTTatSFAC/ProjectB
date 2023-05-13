@@ -4,18 +4,28 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.projecta.adapter.EventMenuAdapter;
 import com.example.projecta.database.UserDB;
 import com.example.projecta.model.User;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -90,6 +100,7 @@ public class MenuActivity extends AppCompatActivity {
     public void initView() {
         toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle("得閒飲茶");
+
         setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.event_menu_rv);
     }
@@ -114,4 +125,31 @@ public class MenuActivity extends AppCompatActivity {
         phoneNumberExist("54059511");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_sign_out) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false)
+                    .setTitle("登出")
+                    .setMessage("確定要登出嗎?")
+                    .setNegativeButton("否", null)
+                    .setPositiveButton("是", (dialogInterface, i) -> {
+                        AuthUI.getInstance().signOut(this)
+                                .addOnCompleteListener(task -> {
+                                    Toast.makeText(MenuActivity.this, "已成功登出", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(this, MainActivity.class));
+                                });
+                    })
+                    .create()
+                    .show();
+        }
+        return true;
+    }
 }

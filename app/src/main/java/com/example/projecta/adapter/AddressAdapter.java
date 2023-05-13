@@ -57,6 +57,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
                     .setPositiveButton("是", (dialogInterface, i) -> {
                         Intent intent = new Intent();
                         UserDB userDB = new UserDB();
+                        Log.d(TAG, "onBindViewHolder: region = " + region);
+                        Log.d(TAG, "onBindViewHolder: userId = " + userId);
                         userDB.writeNewUserAddress(userId, region);
                         intent.putExtra("UUID", userId);
                         intent.setClass(context, EventActivity.class);

@@ -1,6 +1,9 @@
 package com.example.projecta.adapter;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,6 +57,7 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.ViewHolder
         District district = map.get(mData.get(position));
         holder.imgRegion.setImageResource(district.getDistrictIcon());
 
+        Log.d(TAG, "onBindViewHolder: mData.get(pos) = " + mData.get(position));
         AddressAdapter addressAdapter = new AddressAdapter(district.getAddressList(),
                 context, mData.get(position), userId);
 

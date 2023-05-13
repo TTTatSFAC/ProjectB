@@ -57,4 +57,8 @@ public class UserDB {
         mDatabase.child("users").child(userId).child("events").setValue(selectedEvent);
     }
 
+    public void writeNewUserId(String userId) {
+        mDatabase.child("users").child(userId).child("userId").setValue(userId);
+    }
+
 }

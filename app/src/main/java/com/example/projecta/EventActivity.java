@@ -57,6 +57,7 @@ public class EventActivity extends AppCompatActivity {
 
             UserDB userDB = new UserDB();
             userDB.writeNewEvents(userId, selectedEvent);
+            userDB.writeNewUserId(userId);
             Bundle bundle = new Bundle();
             bundle.putStringArrayList("EVENTS", selectedEvent);
             bundle.putString("UUID", userId);

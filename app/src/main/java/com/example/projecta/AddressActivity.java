@@ -48,6 +48,7 @@ public class AddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
+        getUser();
         setupNTDis();
         setupKLDis();
         setupHKDis();
@@ -55,8 +56,6 @@ public class AddressActivity extends AppCompatActivity {
 
         initView();
         setSupportActionBar(toolbar);
-
-        getUser();
 
     }
 
